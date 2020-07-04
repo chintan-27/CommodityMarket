@@ -1,15 +1,78 @@
 {% extends 'index.html' %}
 {% block content %}
 {% for i in commodity %}
-<img src="/media/{{i.image}}" alt="" height="300" width="400">
+<!-- <img src="/media/{{i.image}}" alt="" height="300" width="400">
 {{i.name}}<br>
-{{i.priceperkg}}<br>
-Weight:{{weight}}<br>
-Bill: {{bill}}<br>
-Taxes: {{tax}}<br>
-Delivery Price: {{deliveryprice}}
+
+<a href="/placeorder/{{i.comcode}}/{{weight}}/RT/">Confirm</a> -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="/media/{{i.image}}" alt="" width="100%">
+    </div>
+  <div class="col-md-6" style="font-size:2rem">
+    <div class="row ">
+      <div class="col-md-6">
+        Name:
+      </div>
+      <div class="col-md-6">
+        {{i.name}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        Price:
+      </div>
+      <div class="col-md-6">
+        {{i.priceperkg}}
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          Weight:
+        </div>
+        <div class="col-md-6">
+          {{weight}}
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        Bill:
+      </div>
+      <div class="col-md-6">
+        {{bill}}
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      Tax:
+    </div>
+    <div class="col-md-6">
+      {{tax}}
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    Delivery Price:
+  </div>
+  <div class="col-md-6">
+    {{deliveryprice}}
+  </div>
+</div>
 <hr>
-Total:{{total}}<br>
-<a href="/placeorder/{{i.comcode}}/{{weight}}/RT/">Confirm</a>
+<div class="row">
+  <div class="col-md-6">
+    Total:
+  </div>
+  <div class="col-md-6">
+    {{total}}
+  </div>
+</div><br><br>
+<a href="/placeorder/{{i.comcode}}/{{weight}}/RT/" class="i-btn">Confirm</a>
+</div>
+</div>
+  </div>
+<br><br>
+</div>
 {% endfor %}
 {% endblock %}

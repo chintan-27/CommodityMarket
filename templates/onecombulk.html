@@ -1,73 +1,96 @@
 {% extends 'index.html' %}
 {% block content %}
 {% for i in commodity %}
-{{i.name}}<br>
-{{i.priceperquintal}} per quintal<br>
-{{i.description}}<br>
-{{i.breed}}<br>
-{{i.username_id}}<br>
-<img src="/media/{{i.image}}" alt="" height="300" width="400">
 <div class="container">
   <div class="row">
-    <div class="col-md-3 weight" id = 50 onclick="selected(50,{{i.priceperquintal}}/100)">
-      50 kg
+    <div class="col-md-6">
+      <img src="/media/{{i.image}}" alt=""  width="100%">
     </div>
-    <div class="col-md-3 weight" id = 100 onclick="selected(100,{{i.priceperquintal}}/100)">
+    <div class="col-md-6">
+      <center>
+        <h1>
+      {{i.name}} {{i.breed}}<br>
+      </h1>
+      <br>
+      <h2 style="position:absolute;right : 20px;">
+        &#8377 {{i.priceperkg}}
+      </h2>
+      <br><br><br>
+      <h4>
+        {{i.description}}<br>
+      </h4><br>
+    </center>
+        <h4><ion-icon name="person-circle-outline" style="font-size:2rem;transform:translateY(5px)"></ion-icon> : {{i.username_id}}<br></h4>
+<div class="w-row">
+        <div class="weight shadow" id = 50 onclick="selected(50,{{i.priceperquintal}}/100)">
+        50 kg
+      </div>
+      <div class="weight shadow" id = 100 onclick="selected(100,{{i.priceperquintal}}/100)">
       100 kg
+      </div>
+      <div class="weight shadow" id = 200 onclick="selected(200,{{i.priceperquintal}}/100)">
+        200 kg
+      </div>
+      <div class="shadow weight" id = 500 onclick="selected(500,{{i.priceperquintal}}/100)">
+        500 kg
+      </div>
+      <div class="shadow weight" id = 9 onclick="other(50)">
+        Other in kg
+      </div>
     </div>
-    <div class="col-md-3 weight" id = 200 onclick="selected(200,{{i.priceperquintal}}/100)">
-      200 kg
-    </div>
-    <div class="col-md-3 weight" id = 500 onclick="selected(500,{{i.priceperquintal}}/100)">
-      500 kg
+<br><br>
+      <div class="col-md-12">
+        <input id="in" class ="hide form-control" type="number" step="0.1" name="" value="0.0" onchange="weightNew(this,{{i.priceperkg}})">
+      </div>
+      <br><br><a href="/confirmbulk/{{i.comcode}}" class="i-btn" onclick="
+      if(weight>0){
+          if({{i.amount}}-weight>0){
+
+            if(weight>=50){
+
+              location.href=this.href+'/'+weight+ '/';
+              return false;
+          }else{
+            alert('Minimum Weight 50kg');
+            return false;
+          }
+        }else{
+          alert('Out Of Stock');
+          return false;
+        }
+      }
+      else{
+        alert('Please Select Weight');
+        return false;
+      }
+      ">Buy Now</a>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3 weight" id = 9 onclick="other(50)">
-      Other in kg
+    <div class="col-md-12">
+      <input id="in" class ="hide" type="number" step="0.1" name="" value="0.0" onchange="weightNew(this,{{i.priceperkg}})">
     </div>
-    <div class="col-md-9">
-      <input id="in" class ="hide" type="number" step="0.1" name="" value="0.0" onchange="weightNew(this,{{i.priceperquintal}}/100)">
-    </div>
+  </div>
+  <div class="bill">
+    <br><br>&#8377
   </div>
   <div class="" id="bill">
-    0.0
+    <br><br>0.0
   </div>
+
 </div>
-{% for j in distance %}
-Delivery in {{j.timeindays}} days
-{% endfor %}
-{% if i.perishable %}
-#Delivery Charges will apply Rs 1000 / per quintal
-{% else %}
-#Delivery charges will apply Rs 200 / per quintal
-{% endif %}
-
-<a href="/confirmbulk/{{i.comcode}}" onclick="
-  if(weight>0){
-      if({{i.amount}}-weight>0){
-
-        if(weight>=50){
-
-          location.href=this.href+'/'+weight+ '/';
-          return false;
-      }else{
-        alert('Minimum Weight 50kg');
-        return false;
-      }
-    }else{
-      alert('Out Of Stock');
-      return false;
-    }
-  }
-  else{
-    alert('Please Select Weight');
-    return false;
-  }
-">Buy Now</a>
-
-
-
-
+<div class="container">
+  {% for j in distance %}
+  Delivery in {{j.timeindays}} days<br>
+  {% endfor %}
+  {% if i.perishable %}
+  #Delivery charges apply
+  {% for k in charge %}
+   {{k.deliverychargeperkg}} per kg <br>
+  {% endfor %}
+  {% else %}
+  #No delivery charges
+  {% endif %}<br><br>
+</div>
 {% endfor %}
 {% endblock %}

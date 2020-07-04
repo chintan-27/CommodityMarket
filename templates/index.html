@@ -9,16 +9,26 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Viga' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet'>
   </head>
   <body>
-    <div class="head">
         <nav class="navbar">
+
       <ul class="nav">
+        <li>
+          <img src="{% static 'img/किसानfresh.png' %}" alt="" height="70" width="70">
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/"><b>HOME</b></a>
+        </li>
         {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link active" href="{% url 'logout' %}"><b>Logout</b></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'dashboard' %}"><b>Dashboard</b></a>
       </li>
            {% else %}
       <li class="nav-item">
@@ -31,9 +41,109 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     <li class="nav-item">
       <a class="nav-link" href="{% url 'Cart' %}"><b>Cart</b></a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#"><b>Help</b></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="#"><b>Contact</b></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="#"><b>Language</b></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url 'wholesaleshop' %}"><b>Wholesale shop</b></a>
+    </li>
   </ul>
   </nav>
   {% block content %}
+  <div class="head">
+    <center><img src="{% static 'img/किसानfresh.png' %}" alt=""></center>
+    <img class="farmer-img"src="{% static 'img/farmer.png' %}" alt="">
+    <div class="">
+      <h3 class="head-text">
+        Shop directly from farmers.
+      </h3>
+      <a href="/retailshop/" class="shop-btn">Shop Now</a>
+    </div>
+  </div><br><br><br>
+  <div class="sect-one container">
+    <center><h1>Shop By Categories</h1></center><br><br>
+    <div class="row">
+      <div class="item  shadow">
+        <a href="/retailshop/type/abc/VEGIES">
+        <center><h3>Vegies</h3></center>
+        </a>
+      </div>
+      <div class="item  shadow">
+        <a href="/retailshop/type/abc/FRUIT">
+        <center><h3>Fruits</h3></center>
+        </a>
+      </div>
+      <div class="item  shadow">
+        <a href="/retailshop/type/abc/PULSES">
+        <center><h3>Pulses</h3></center>
+        </a>
+      </div>
+      <div class="item  shadow">
+        <a href="/retailshop/type/abc/CEREAL">
+        <center><h3>Cereal</h3></center>
+        </a>
+      </div>
+      <div class="item  shadow">
+        <a href="/retailshop/type/abc/OTHERS">
+        <center><h3>Others</h3></center>
+        </a>
+      </div>
+    </div> <br><br>
+  </div><br><br><br>
+
+  <div class="sect-three"><br><br><br>
+    <div class="container">
+    <center><h1><b>BENEFITS</b></h1></center><br><br>
+      <h5>
+        <ol>
+          <li>Local food is better for us. The shorter the time between the farm and our table, the less likely it is that nutrients will be lost from fresh food. Food imported from far away is older and has traveled on trucks or planes, and sat in warehouses before it gets to you.</li><br>
+          <li>Local food supports local families. The wholesale prices that farmers get for their products are low, often near the cost of production. Local farmers who sell direct to consumers cut out the middleman and get full retail price for their food - which helps farm families stay on the land.</li>
+        </ol>
+      </h5><br><br>
+      <center>
+      <h2><b>
+        "Local food is an investment in the future. By supporting local farmers today, we are helping to ensure that there will be farms in our community tomorrow!
+"
+      </b>
+      </h2>
+      <br>
+    </center>
+  </div>
+  </div>
+  <div class="sect-four container"><br><br><br>
+    <center><h1><b>USAGE</b></h1></center><br><br>
+    <video width="100%" height="600" controls>
+      <source src="movie.mp4" type="video/mp4">
+      <source src="movie.ogg" type="video/ogg">
+    Your browser does not support the video tag.
+  </video><br><br>
+  </div>
   {% endblock %}
+  <footer>
+    <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+          <p class="fp">
+              Copyright &copy किसानfresh LTD .<br>Developed by Emulation Nerds.
+          </p>
+      </div>
+        <div class="col-md-6">
+            <ul class="social-links">
+                <li><a href="#"><ion-icon class="ion-social-facebook" name="logo-facebook"></ion-icon></a></li>
+                <li><a href="#"></a><ion-icon class="ion-social-twitter" name="logo-twitter"></ion-icon></li>
+                <li><a href="#"></a><ion-icon class="ion-social-instagram" name="logo-instagram"></ion-icon></li>
+                <li><a href="#"><ion-icon class="ion-social-googleplus" name="logo-linkedin"></ion-icon></a></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  </footer>
+  <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
   </body>
 </html>

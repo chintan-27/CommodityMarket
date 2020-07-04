@@ -1,16 +1,40 @@
 {% extends 'index.html' %}
 {% block content %}
-<h1>Orders</h1>
+<div class="container">
+  <h1>Orders</h1>
 {% for i in yourorder %}
-{{i.ordercode}}<br>
-{{i.price}}<br>
-{{i.bill}}<br>
-{{i.tax}}<br>
-{{i.total}}<br>
-{{i.amount}}<br>
-{{i.orderstatus}}
-{% ifequal i.orderstatus "DELIVERED" %}
-<a href="/feedback/{{i.comcode}}">FEEBBACK</a>
-{% endifequal %}
+<div class="row" style="margin-top:20px;margin-bottom:20px;border-bottom:1px solid #000">
+  <div class="col-md-2">
+    {{i.name}}
+  </div>
+  <div class="col-md-2">
+    {{i.seller}}
+  </div>
+  <div class="col-md-1">
+    {{i.amount}}
+  </div>
+  <div class="col-md-1">
+    {{i.price}}
+  </div>
+  <div class="col-md-1">
+    {{i.bill}}
+  </div>
+  <div class="col-md-1">
+    {{i.tax}}
+  </div>
+  <div class="col-md-1">
+    {{i.total}}
+  </div>
+  <div class="col-md-2">
+    {{i.orderstatus}}
+  </div>
+  <div class="col-md-1">
+    {% ifequal i.orderstatus "DELIVERED" %}
+    <a href="/feedback/{{i.comcode}}" class="btn btn-warning">FEEDBACK</a>
+    {% endifequal %}
+  </div>
+</div>
 {% endfor %}
+</div>
+
 {% endblock %}

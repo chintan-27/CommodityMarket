@@ -1,7 +1,15 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import *
+
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(max_length=254,widget= forms.TextInput(attrs={'class':'form-control'}))
+    password = forms.CharField(max_length=20,widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = User
 
 class DateInput(forms.DateInput):
     input_type = "date"
@@ -74,7 +82,7 @@ class UserTypeForm(forms.Form):
         (DELIVERYBOY,'Delivery Boy'),
         (COURIERCOMPANY,'Courier Company'),
     )
-    usertype= forms.CharField(max_length=30,widget=forms.Select(choices=USER_CHOICES))
+    usertype= forms.CharField(max_length=30,widget=forms.Select(choices=USER_CHOICES,attrs={'class':'d-form form-control'}))
 
 class CommodityForm(forms.Form):
     name = forms.CharField(max_length=200)
@@ -103,8 +111,8 @@ class Search(forms.Form):
     search = forms.CharField(max_length=200)
 
 class FeedbackForm(forms.Form):
-    rating = forms.FloatField(max_value=5, min_value=0, widget=forms.NumberInput(attrs={'id': 'form_homework', 'step': "0.01"}))
-    desc = forms.CharField(max_length=200)
+    rating = forms.FloatField(max_value=5, min_value=0, widget=forms.NumberInput(attrs={'id': 'form_homework', 'step': "0.01",'class':'form-control'}))
+    desc = forms.CharField(max_length=200,widget= forms.TextInput(attrs={'class':'d-form form-control'}))
 
     class Meta:
         Model = Ratings

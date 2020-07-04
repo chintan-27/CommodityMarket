@@ -30,8 +30,7 @@ def assignCourier(ordercode,perishable,city1,city2):
                 j.save()
 
 def assignDelivery(request,ordercode,city):
-    a = DeliveryBoy.objects.filter(city=city.capitalize()).filter(status="Available").order_by('orders')
-    print(a[0])
+    a = DeliveryBoy.objects.filter(city=city.capitalize()).order_by('orders')
     j = a[0]
     c = CourierOrder.objects.filter(ordercode=ordercode)
     for i in c:
@@ -114,7 +113,8 @@ def AssignTruck(ordercode,city1,city2,perishable):
         a.save()
         b.save()
     else:
-        a = TruckDrivers.objects.filter(city=city1).filter(trucktype="AC").filter(status="Available")[0]
+        print(city1)
+        a = TruckDrivers.objects.filter(city=city1).filter(trucktype="NL")[0]
         b = TruckOrder(username=a.username_id.username,ordercode=ordercode,city1=city1,city2=city2,date=date.today())
         a.status="Busy"
         a.save()

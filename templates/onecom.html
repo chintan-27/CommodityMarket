@@ -1,96 +1,118 @@
 {% extends 'index.html' %}
 {% block content %}
 {% for i in commodity %}
-{{i.name}}<br>
-{{i.priceperkg}}<br>
-{{i.description}}<br>
-{{i.breed}}<br>
-{{i.username_id}}<br>
-<img src="/media/{{i.image}}" alt="" height="300" width="400">
 <div class="container">
   <div class="row">
-    <div class="col-md-3 weight" id = 0.5 onclick="selected(0.5,{{i.priceperkg}})">
-      0.5 kg
+    <div class="col-md-6">
+      <img src="/media/{{i.image}}" alt=""  width="100%">
     </div>
-    <div class="col-md-3 weight" id = 1 onclick="selected(1,{{i.priceperkg}})">
-      1 kg
+    <div class="col-md-6">
+      <center>
+        <h1>
+      {{i.name}} {{i.breed}}<br>
+      </h1>
+      <br>
+      <h2 style="position:absolute;right : 20px;">
+        &#8377 {{i.priceperkg}}
+      </h2>
+      <br><br><br>
+      <h4>
+        {{i.description}}<br>
+      </h4><br>
+    </center>
+        <h4><ion-icon name="person-circle-outline" style="font-size:2rem;transform:translateY(5px)"></ion-icon> : {{i.username_id}}<br></h4>
+<div class="w-row">
+        <div class="weight shadow" id = 0.5 onclick="selected(0.5,{{i.priceperkg}})">
+        0.5 kg
+      </div>
+      <div class="weight shadow" id = 1 onclick="selected(1,{{i.priceperkg}})">
+        1 kg
+      </div>
+      <div class="weight shadow" id = 2 onclick="selected(2,{{i.priceperkg}})">
+        2 kg
+      </div>
+      <div class="shadow weight" id = 5 onclick="selected(5,{{i.priceperkg}})">
+        5 kg
+      </div>
+      <div class="shadow weight" id = 9 onclick="other(0.5)">
+        Other in kg
+      </div>
     </div>
-    <div class="col-md-3 weight" id = 2 onclick="selected(2,{{i.priceperkg}})">
-      2 kg
-    </div>
-    <div class="col-md-3 weight" id = 5 onclick="selected(5,{{i.priceperkg}})">
-      5 kg
+<br><br>
+      <div class="col-md-12">
+        <input id="in" class ="hide form-control" type="number" step="0.1" name="" value="0.0" onchange="weightNew(this,{{i.priceperkg}})">
+      </div>
+      <br><br><a href="/confirm/{{i.comcode}}" class="i-btn" onclick="
+        if(weight>0){
+            if({{i.amount}}-weight>0){
+
+              if(weight<20){
+
+                location.href=this.href+'/'+weight+ '/';
+                return false;
+            }else{
+              alert('Select Below 20kg only');
+              return false;
+            }
+          }else{
+            alert('Out Of Stock');
+            return false;
+          }
+        }
+        else{
+          alert('Please Select Weight');
+          return false;
+        }
+      ">Buy Now</a>
+      <a href="/addcart/{{i.comcode}}" class="i-btn" onclick="
+      if(weight>0){
+          if({{i.amount}}-weight>0){
+
+            if(weight<20){
+
+              location.href=this.href+'/'+weight+ '/';
+              return false;
+          }else{
+            alert('Select Below 20kg only');
+            return false;
+          }
+        }else{
+          alert('Out Of Stock');
+          return false;
+        }
+      }
+      else{
+        alert('Please Select Weight');
+        return false;
+      }
+      ">Add to Cart</a>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3 weight" id = 9 onclick="other(0.5)">
-      Other in kg
-    </div>
-    <div class="col-md-9">
+    <div class="col-md-12">
       <input id="in" class ="hide" type="number" step="0.1" name="" value="0.0" onchange="weightNew(this,{{i.priceperkg}})">
     </div>
   </div>
-  <div class="" id="bill">
-    0.0
+  <div class="bill">
+    <br><br>&#8377
   </div>
+  <div class="" id="bill">
+    <br><br>0.0
+  </div>
+
 </div>
-{% for j in distance %}
-Delivery in {{j.timeindays}} days<br>
-{% endfor %}
-{% if i.perishable %}
-#Delivery charges apply
-{% for k in charge %}
- {{k.deliverychargeperkg}}per kg <br>
-{% endfor %}
-{% else %}
-#No delivery charges
-{% endif %}
-
-
-<a href="/confirm/{{i.comcode}}" onclick="
-  if(weight>0){
-      if({{i.amount}}-weight>0){
-
-        if(weight<20){
-
-          location.href=this.href+'/'+weight+ '/';
-          return false;
-      }else{
-        alert('Select Below 20kg only');
-        return false;
-      }
-    }else{
-      alert('Out Of Stock');
-      return false;
-    }
-  }
-  else{
-    alert('Please Select Weight');
-    return false;
-  }
-">Buy Now</a>
-<a href="/addcart/{{i.comcode}}" onclick="
-if(weight>0){
-    if({{i.amount}}-weight>0){
-
-      if(weight<20){
-
-        location.href=this.href+'/'+weight+ '/';
-        return false;
-    }else{
-      alert('Select Below 20kg only');
-      return false;
-    }
-  }else{
-    alert('Out Of Stock');
-    return false;
-  }
-}
-else{
-  alert('Please Select Weight');
-  return false;
-}
-">Add to Cart</a>
-
+<div class="container">
+  {% for j in distance %}
+  Delivery in {{j.timeindays}} days<br>
+  {% endfor %}
+  {% if i.perishable %}
+  #Delivery charges apply
+  {% for k in charge %}
+   {{k.deliverychargeperkg}} per kg <br>
+  {% endfor %}
+  {% else %}
+  #No delivery charges
+  {% endif %}<br><br>
+</div>
 {% endfor %}
 {% endblock %}

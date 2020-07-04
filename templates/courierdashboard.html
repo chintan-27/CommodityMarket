@@ -1,12 +1,26 @@
-{% extends 'index.html' %}
+{% extends 'truckdashboard.html' %}
 {% block content %}
-{% for i in couriers %}
-{{i.ordercode}}<br>
-from: {{i.city1}}<br>
-to: {{i.city2}}<br>
-Status: {{i.status}}
-{% ifequal i.status "PENDING" %}
-<a href="/delivery/assigndelivery/{{i.ordercode}}/{{i.city2}}/">DELIVERED</a>
-{% endifequal %}
+<div class="container new">
+  {% for i in couriers %}
+<div class="row">
+  <div class="col-md-2">
+    {{i.ordercode}}
+  </div>
+  <div class="col-md-2">
+    from: {{i.city1}}
+  </div>
+  <div class="col-md-2">
+    to: {{i.city2}}
+  </div>
+  <div class="col-md-2">
+    Status: {{i.status}}
+  </div>
+  <div class="col-md-2">
+    {% ifequal i.status "PENDING" %}
+    <a href="/delivery/assigndelivery/{{i.ordercode}}/{{i.city2}}/">DELIVERED</a>
+    {% endifequal %}
+  </div>
+</div>
 {% endfor %}
+</div>
 {% endblock %}

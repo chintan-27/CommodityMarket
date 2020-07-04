@@ -1,18 +1,42 @@
 {% extends 'index.html' %}
 {% block content %}
-{% for i in commodities %}
 <div class="container">
-  {{i.name}}
-  {{i.amount}}
-  <div class="col-md-6">
-    {{i.description}}
-  </div>
-  {{i.priceperkg}}
-  {{i.priceperquintal}}
-  <img src="/media/{{i.image}}" alt="" height="300" width="400">
-  <a href="/onecom/{{i.comcode}}/">BUY</a><br><br>
-  {{i.rating}}
-  <br><br>
+<div class="row">
+{% for i in commodities %}
+<div class="col-md-4">
+  <a href="/onecom/{{i.comcode}}/">
+  <div class="commodity shadow">
+      <div class="c-img">
+  <img src="/media/{{i.image}}" alt="" height="300" width="100%">
+</div>
+  <div class="c-name">{{i.name}}</div>
+  <div class="c-amount">{{i.amount}} kg in stock</div>
+  <div class="c-price">&#8377 {{i.priceperkg}} <span> / kg</span> </div>
+</div>
+</a>
 </div>
 {% endfor %}
+  </div>
+</div>
+<div class="menu" id="menu">
+  <div class="menu-btn" id = "menubtn" onclick="MenuOpen()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </div>
+  <ul style="list-style:none;">
+    <li><a href="/retailshop/price/HL/">By Price high to low</a></li>
+    <li><a href="/retailshop/price/LH/">By Price Low to high</a></li>
+    <li><a href="/retailshop/rating/">By Rating</a></li>
+    <li><a href="/retailshop/type/abc/FRUIT/">Fruits</a></li>
+    <li><a href="/retailshop/type/abc/VEGIES">Vegetables</a></li>
+    <li><a href="/retailshop/type/abc/PULSES">Pulses</a></li>
+    <li><a href="retailshop/type/abc/CEREAL">Cereal</a></li>
+    <li><a href="/retailshop/type/abc/OTHERS/">Other</a></li>
+  </ul>
+</div>
+<script type="text/javascript">
+  function MenuOpen(){
+    document.getElementById("menu").classList.toggle('show-menu');
+    document.getElementById("menubtn").classList.toggle('show-menu-btn');
+  }
+</script>
 {% endblock %}

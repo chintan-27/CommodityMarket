@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Users(models.Model):
-    username_id = models.ForeignKey(User,on_delete=models.CASCADE,default=0)
+    username = models.CharField(max_length=100)
     DELIVERYBOY = 'DB'
     COURIERCOMPANY = 'CC'
     TRUCKDRIVERS = 'TD'

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.conf import settings
 from .forms import *
@@ -12,7 +13,8 @@ from DeliverySystem import views
 
 
 def indexView(request):
-        a = UserType.objects.filter(username = request.user.username)[0]
+    if(request.user.is_authenticated):
+        a = UserType.objects.filter(username = request.user.username)
         response={}
         if(a):
             return render(request,"index.html")
@@ -24,6 +26,9 @@ def indexView(request):
                 return redirect('DeliveryDashboard')
             elif(a.usertype == "TD"):
                 return redirect('TruckDashboard')
+    else:
+        return render(request,"index.html")
+
 
 def registerView(request):
     if request.method=="POST":
@@ -34,8 +39,12 @@ def registerView(request):
             if form1.is_valid():
                 username = form.cleaned_data['username']
                 type = form1.cleaned_data['usertype']
-                a = UserType(username=username,usertype=type)
-                a.save()
+                if(type=='FR' or type == 'RB' or type == 'MR'):
+                    a = UserType(username=username,usertype=type)
+                    a.save()
+                else :
+                    a = Users(username=username,usertype=type)
+                    a.save()
             return redirect('login_url')
     else:
             form=SignUpForm()
@@ -44,36 +53,38 @@ def registerView(request):
             return render(request,'register.html',{'form': form,'form1':form1})
     return render(request,'register.html',{'form': form,'form1':form1})
 
+@login_required
 def Dashboard(request):
-    a = UserType.objects.filter(username = request.user.username)[0]
+    a = UserType.objects.filter(username = request.user.username)
     response={}
     if(a):
-        if(a.usertype == "FR"):
-            a = Commodities.objects.filter(username_id=request.user)
-            d = {'commodities':a}
-            b = Order.objects.filter(seller=request.user.username)
-            e = {'orderforyou':b}
-            c = Order.objects.filter(buyer=request.user.username)
-            f = {'yourorder':c}
-            response = {**d,**e,**f}
-        elif(a.usertype=="RB"):
-            print("hi")
-            b = Order.objects.filter(buyer=request.user.username)
-            e = {'yourorder':b}
-            response = {**e}
-        elif(a.usertype == "MR"):
-            b = Order.objects.filter(buyer=request.user.username)
-            e = {'orderforyou':b}
-            response = {**e}
+        for i in a:
+            if(i.usertype == "FR"):
+                a = Commodities.objects.filter(username_id=request.user)
+                d = {'commodities':a}
+                b = Order.objects.filter(seller=request.user.username)
+                e = {'orderforyou':b}
+                c = Order.objects.filter(buyer=request.user.username)
+                f = {'yourorder':c}
+                response = {**d,**e,**f}
+            elif(i.usertype=="RB"):
+                b = Order.objects.filter(buyer=request.user.username)
+                e = {'yourorder':b}
+                response = {**e}
+            elif(i.usertype == "MR"):
+                b = Order.objects.filter(buyer=request.user.username)
+                e = {'yourorder':b}
+                response = {**e}
         return render(request,'dashboard.html',response)
     else:
-        a = Users.objects.filter(username = request.user.username)[0]
-        if(a.usertype == "CC"):
-            return redirect('CourierDashboard')
-        elif(a.usertype == "DB"):
-            return redirect('DeliveryDashboard')
-        elif(a.usertype == "TD"):
-            return redirect('TruckDashboard')
+        a = Users.objects.filter(username = request.user.username)
+        for i in a:
+            if(i.usertype == "CC"):
+                return redirect('CourierDashboard')
+            elif(i.usertype == "DB"):
+                return redirect('DeliveryDashboard')
+            elif(i.usertype == "TD"):
+                return redirect('TruckDashboard')
 
 
 def CommoditiesAdd(request):
@@ -104,11 +115,13 @@ def CommoditiesAdd(request):
     else:
         return render(request,'commodity.html',{'form':form})
 
+@login_required
 def AllCommoditiesRetail(request):
     commodities = Commodities.objects.all()
     a = {'commodities':commodities}
     return render(request,'retailshop.html',a)
 
+@login_required
 def AllCommoditiesRetailType(request,type):
     commodities = Commodities.objects.filter(type=type)
     a = {'commodities':commodities}
@@ -116,16 +129,21 @@ def AllCommoditiesRetailType(request,type):
 
     return render(request,'retailshop.html',a)
 
+
+@login_required
 def AllCommoditiesRetailPriceLH(request):
     commodities = Commodities.objects.all().order_by('priceperkg')
     a = {'commodities':commodities}
     return render(request,'retailshop.html',a)
 
+
+@login_required
 def AllCommoditiesRetailPriceHL(request):
     commodities = Commodities.objects.all().order_by('priceperkg')
     a = {'commodities':commodities}
     return render(request,'retailshop.html',a)
 
+@login_required
 def AllCommoditiesRetailRating(request):
     commodities = Commodities.objects.all().order_by('rating')
     a = {'commodities':commodities}
@@ -230,7 +248,7 @@ def AddToCart(request,comcode,weight):
     a = Cart(comcode=comcode,name=name1,type=type1,breed=breed1,username=username,weight=weight)
     a.save()
     return redirect('retailshop')
-
+@login_required
 def CartView(request):
     one = request.user.username
     a = Cart.objects.filter(username = one)
