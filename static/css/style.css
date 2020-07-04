@@ -1,0 +1,18 @@
+.select{
+  background: #284596;
+  cursor: pointer;
+}
+.unselect{
+  background: #FFF
+  cursor: pointer;
+}
+.hide{
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: 0.7s
+}
+.show{
+    transform: scaleX(1);
+    transform-origin: right;
+    transition: 0.7s
+}

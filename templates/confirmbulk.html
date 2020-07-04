@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% block content %}
+{% for i in commodity %}
+<img src="/media/{{i.image}}" alt="" height="300" width="400">
+{{i.name}}<br>
+{{i.priceperquintal}}<br>
+Weight:{{weight}}<br>
+Bill: {{bill}}<br>
+Taxes: {{tax}}
+<hr>
+Total:{{total}}<br>
+<a href="/placebulkorder/{{i.comcode}}/{{weight}}/BL/">Confirm</a>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% block content %}
+{% for i in commodities %}
+<div class="container">
+  {{i.name}}
+  {{i.amount}}
+  <div class="col-md-6">
+    {{i.description}}
+  </div>
+  {{i.priceperunit}}
+  {{i.priceforbulk}}
+  {{i.amount}}
+  <img src="/media/{{i.image}}" alt="" height="300" width="400">
+  <a href="/onecombulk/{{i.comcode}}/">BUY</a>
+</div>
+{% endfor %}
+{% endblock %}

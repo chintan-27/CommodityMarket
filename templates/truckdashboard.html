@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block content %}
+{% for i in TruckOrder %}
+{{i.ordercode}}<br>
+from: {{i.city1}}<br>
+to: {{i.city2}}<br>
+Status: {{i.status}}
+{% ifequal i.status "PENDING" %}
+<a href="/delivery/trukdelivered/{{i.ordercode}}/">DELIVERED</a>
+{% endifequal %}
+{% endfor %}
+{% endblock %}

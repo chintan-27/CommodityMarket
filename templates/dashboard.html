@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1>Orders</h1>
+{% for i in yourorder %}
+{{i.ordercode}}<br>
+{{i.price}}<br>
+{{i.bill}}<br>
+{{i.tax}}<br>
+{{i.total}}<br>
+{{i.amount}}<br>
+{{i.orderstatus}}
+{% ifequal i.orderstatus "DELIVERED" %}
+<a href="/feedback/{{i.comcode}}">FEEBBACK</a>
+{% endifequal %}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+{% block content %}
+{% for i in commodity %}
+{{i.name}}<br>
+{{i.priceperkg}}<br>
+{{i.description}}<br>
+{{i.breed}}<br>
+{{i.username_id}}<br>
+<img src="/media/{{i.image}}" alt="" height="300" width="400">
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 weight" id = 0.5 onclick="selected(0.5,{{i.priceperkg}})">
+      0.5 kg
+    </div>
+    <div class="col-md-3 weight" id = 1 onclick="selected(1,{{i.priceperkg}})">
+      1 kg
+    </div>
+    <div class="col-md-3 weight" id = 2 onclick="selected(2,{{i.priceperkg}})">
+      2 kg
+    </div>
+    <div class="col-md-3 weight" id = 5 onclick="selected(5,{{i.priceperkg}})">
+      5 kg
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 weight" id = 9 onclick="other(0.5)">
+      Other in kg
+    </div>
+    <div class="col-md-9">
+      <input id="in" class ="hide" type="number" step="0.1" name="" value="0.0" onchange="weightNew(this,{{i.priceperkg}})">
+    </div>
+  </div>
+  <div class="" id="bill">
+    0.0
+  </div>
+</div>
+{% for j in distance %}
+Delivery in {{j.timeindays}} days<br>
+{% endfor %}
+{% if i.perishable %}
+#Delivery charges apply
+{% for k in charge %}
+ {{k.deliverychargeperkg}}per kg <br>
+{% endfor %}
+{% else %}
+#No delivery charges
+{% endif %}
+
+
+<a href="/confirm/{{i.comcode}}" onclick="
+  if(weight>0){
+      if({{i.amount}}-weight>0){
+
+        if(weight<20){
+
+          location.href=this.href+'/'+weight+ '/';
+          return false;
+      }else{
+        alert('Select Below 20kg only');
+        return false;
+      }
+    }else{
+      alert('Out Of Stock');
+      return false;
+    }
+  }
+  else{
+    alert('Please Select Weight');
+    return false;
+  }
+">Buy Now</a>
+<a href="/addcart/{{i.comcode}}" onclick="
+if(weight>0){
+    if({{i.amount}}-weight>0){
+
+      if(weight<20){
+
+        location.href=this.href+'/'+weight+ '/';
+        return false;
+    }else{
+      alert('Select Below 20kg only');
+      return false;
+    }
+  }else{
+    alert('Out Of Stock');
+    return false;
+  }
+}
+else{
+  alert('Please Select Weight');
+  return false;
+}
+">Add to Cart</a>
+
+{% endfor %}
+{% endblock %}
