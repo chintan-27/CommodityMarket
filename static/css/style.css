@@ -276,5 +276,5 @@ footer {
   transition: 0.3s;
 }
 .new{
-  height: 100vh;
+  min-height: 100vh;
 }

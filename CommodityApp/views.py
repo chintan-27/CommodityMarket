@@ -17,7 +17,17 @@ def indexView(request):
         a = UserType.objects.filter(username = request.user.username)
         response={}
         if(a):
-            return render(request,"index.html")
+            for i in a:
+                if(i.usertype == "FR"):
+                    f = {'type':i.usertype}
+                    response = {**f}
+                elif(i.usertype=="RB"):
+                    f = {'type':i.usertype}
+                    response = {**f}
+                elif(i.usertype == "MR"):
+                    f = {'type':i.usertype}
+                    response = {**f}
+            return render(request,"index.html",response)
         else:
             a = Users.objects.filter(username = request.user.username)[0]
             if(a.usertype == "CC"):
@@ -60,22 +70,83 @@ def Dashboard(request):
     if(a):
         for i in a:
             if(i.usertype == "FR"):
-                a = Commodities.objects.filter(username_id=request.user)
-                d = {'commodities':a}
-                b = Order.objects.filter(seller=request.user.username)
-                e = {'orderforyou':b}
-                c = Order.objects.filter(buyer=request.user.username)
-                f = {'yourorder':c}
-                response = {**d,**e,**f}
+                abc = Farmer.objects.filter(username_id=request.user)
+                if(abc):
+                    a = Commodities.objects.filter(username_id=request.user)
+                    d = {'commodities':a}
+                    b = Order.objects.filter(seller=request.user.username)
+                    e = {'orderforyou':b}
+                    c = Order.objects.filter(buyer=request.user.username)
+                    f = {'yourorder':c}
+                    response = {**d,**e,**f}
+                    return render(request,'dashboard.html',response)
+                else:
+                    form = FarmerForm(request.POST)
+                    response = {'form':form}
+                    if request.method=="POST":
+                        if form.is_valid():
+                            address = form.cleaned_data['address']
+                            city = form.cleaned_data['city']
+                            state = form.cleaned_data['state']
+                            gfh = Farmer(username_id=request.user,address=address,city=city,state=state)
+                            gfh.save()
+                            return redirect('dashboard')
+                        else:
+                            return render(request,'dashboard.html',response)
+                    else:
+                        print(response)
+                        return render(request,'dashboard.html',response)
             elif(i.usertype=="RB"):
-                b = Order.objects.filter(buyer=request.user.username)
-                e = {'yourorder':b}
-                response = {**e}
+                abc = Customer.objects.filter(username_id=request.user)
+                if(abc):
+                    b = Order.objects.filter(buyer=request.user.username)
+                    e = {'yourorder':b}
+                    response = {**e}
+                    return render(request,'dashboard.html',response)
+                else:
+                    form = CustomerForm(request.POST)
+                    jhk = {'form':form}
+                    response = {**jhk}
+                    if request.method=="POST":
+                        if form.is_valid():
+                            address = form.cleaned_data['address']
+                            city = form.cleaned_data['city']
+                            state = form.cleaned_data['state']
+                            gfh = Customer(username_id=request.user,address=address,city=city,state=state)
+                            gfh.save()
+                            return redirect('dashboard')
+                        else:
+                            return render(request,'dashboard.html',response)
+                    else:
+                        return render(request,'dashboard.html',response)
             elif(i.usertype == "MR"):
-                b = Order.objects.filter(buyer=request.user.username)
-                e = {'yourorder':b}
-                response = {**e}
-        return render(request,'dashboard.html',response)
+                abc = Manufacturer.objects.filter(username_id=request.user)
+                if(abc):
+                    b = Order.objects.filter(buyer=request.user.username)
+                    e = {'yourorder':b}
+                    response = {**e}
+                    return render(request,'dashboard.html',response)
+                else:
+                    form = Manufacturer(request.POST)
+                    jhk = {'form':form}
+                    response = {**jhk}
+                    if request.method=="POST":
+                        if form.is_valid():
+                            address = form.cleaned_data['address']
+                            company_name = form.cleaned_data['company_name']
+                            company_add = form.cleaned_data['company_add']
+                            licenceno = form.cleaned_data['licenceno']
+                            address = form.cleaned_data['address']
+                            address = form.cleaned_data['address']
+                            city = form.cleaned_data['city']
+                            state = form.cleaned_data['state']
+                            gfh = Manufacturer(username_id=request.user,address=address,city=city,state=state,company_add=company_add,company_name=company_name,licenceno=licenceno)
+                            gfh.save()
+                            return redirect('dashboard')
+                        else:
+                            return render(request,'dashboard.html',response)
+                    else:
+                        return render(request,'dashboard.html',response)
     else:
         a = Users.objects.filter(username = request.user.username)
         for i in a:

@@ -9,6 +9,7 @@ from django.conf import settings
 urlpatterns = [
     path('', views.indexView, name="home"),
     path('login/',LoginView.as_view(authentication_form=UserLoginForm),name="login_url"),
+    path('accounts/login/',LoginView.as_view(authentication_form=UserLoginForm),name="login_url"),
     path('register/',views.registerView,name="register_url"),
     path('logout/',LogoutView.as_view(next_page='home'),name="logout"),
     path('dashboard/',views.Dashboard,name='dashboard'),

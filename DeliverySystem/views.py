@@ -67,14 +67,47 @@ def assignDeliveryDirect(ordercode,city):
             k.save()
 
 def CourierDashboard(request):
-    a = CourierOrder.objects.filter(username=request.user.username)
-    response = {'couriers':a}
-    return render(request,'courierdashboard.html',response)
+    hd = Courier.objects.filter(username_id=request.user)
+    if(hd):
+        a = CourierOrder.objects.filter(username=request.user.username)
+        response = {'couriers':a}
+        return render(request,'courierdashboard.html',response)
+    else:
+        form = CForm(request.POST)
+        response = {'form':form}
+        if request.method=="POST":
+            if form.is_valid():
+                city = form.cleaned_data['city']
+                usertype = form.cleaned_data['usertype']
+                deliverychargeperkg = form.cleaned_data['deliveryChargePerKg']
+                gfh = Courier(username_id=request.user,city=city,usertype=usertype,deliverychargeperkg=deliverychargeperkg)
+                gfh.save()
+                return redirect('CourierDashboard')
+            else:
+                return render(request,'courierdashboard.html',response)
+        else:
+            return render(request,'courierdashboard.html',response)
 
 def DeliveryDashboard(request):
-    a = DeliveryOrder.objects.filter(username=request.user.username)
-    response = {'deliveries':a}
-    return render(request,'deliverydashbord.html',response)
+    hd = DeliveryBoy.objects.filter(username_id=request.user)
+    if(hd):
+        a = DeliveryOrder.objects.filter(username=request.user.username)
+        response = {'deliveries':a}
+        return render(request,'deliverydashbord.html',response)
+    else:
+        form = DForm(request.POST)
+        response = {'form':form}
+        if request.method=="POST":
+            if form.is_valid():
+                city = form.cleaned_data['city']
+                status = form.cleaned_data['status']
+                gfh = DeliveryBoy(username_id=request.user,city=city,status=status)
+                gfh.save()
+                return redirect('DeliveryDashboard')
+            else:
+                return render(request,'deliverydashbord.html',response)
+        else:
+            return render(request,'deliverydashbord.html',response)
 
 def Delivered(request,ordercode):
     a = DeliveryOrder.objects.filter(ordercode=ordercode)
@@ -121,10 +154,27 @@ def AssignTruck(ordercode,city1,city2,perishable):
         b.save()
 
 def TruckDashboard(request):
-    print(request.user.username)
-    a = TruckOrder.objects.filter(username=request.user.username)
-    response = {'TruckOrder':a}
-    return render(request,'truckdashboard.html',response)
+    hd = DeliveryBoy.objects.filter(username_id=request.user)
+    if(hd):
+        a = TruckOrder.objects.filter(username=request.user.username)
+        response = {'TruckOrder':a}
+        return render(request,'truckdashboard.html',response)
+    else:
+        form = TForm(request.POST)
+        response = {'form':form}
+        if request.method=="POST":
+            if form.is_valid():
+                city = form.cleaned_data['city']
+                status = form.cleaned_data['status']
+                trucktype = form.cleaned_data['trucktype']
+                gfh = TruckDrivers(username_id=request.user,city=city,status=status,trucktype=trucktype)
+                gfh.save()
+                return redirect('TruckDashboard')
+            else:
+                return render(request,'truckdashboard.html',response)
+        else:
+            return render(request,'truckdashboard.html',response)
+
 
 def TruckDelivered(request,ordercode):
     a = Order.objects.filter(ordercode=ordercode)

@@ -41,6 +41,22 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
   </ul>
   </nav>
 {% block content %}
+{% if form %}
+<div class="container"><br><br>
+  <h1 class="ht">ADD DETAILS</h1><br><br>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="form col-md-6 p-3 shadow-lg">
+      <form class="form-group" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+      <button class="btn btn-primary"> REGISTER</button>
+      </form>
+    </div>
+  <div class="col-md-3"></div>
+  </div>
+</div>
+{% endif %}
 <div class="container new">
   {% for i in TruckOrder %}
 <div class="row">

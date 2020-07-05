@@ -50,9 +50,16 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     <li class="nav-item">
       <a class="nav-link active" href="#"><b>Language</b></a>
     </li>
+    {% ifequal type 'FR'  %}
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url 'AddCommodities' %}"><b>Add Commodities</b></a>
+    </li>
+    {% endifequal %}
+    {% ifequal type 'MR'  %}
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'wholesaleshop' %}"><b>Wholesale shop</b></a>
     </li>
+    {% endifequal %}
   </ul>
   </nav>
   {% block content %}
