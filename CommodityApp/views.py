@@ -127,9 +127,8 @@ def Dashboard(request):
                     response = {**e}
                     return render(request,'dashboard.html',response)
                 else:
-                    form = Manufacturer(request.POST)
-                    jhk = {'form':form}
-                    response = {**jhk}
+                    form = ManufacturerForm(request.POST)
+                    response = {'form':form}
                     if request.method=="POST":
                         if form.is_valid():
                             address = form.cleaned_data['address']
@@ -216,7 +215,7 @@ def AllCommoditiesRetailPriceHL(request):
 
 @login_required
 def AllCommoditiesRetailRating(request):
-    commodities = Commodities.objects.all().order_by('rating')
+    commodities = reversed(Commodities.objects.all().order_by('rating'))
     a = {'commodities':commodities}
     return render(request,'retailshop.html',a)
 

@@ -217,6 +217,11 @@ footer {
   font-size: 1.2rem;
   top: 375px;
 }
+.c-rating{
+  position: absolute;
+  font-size: 1.2rem;
+  top: 425px;
+}
 .c-price{
   position: absolute;
   font-size: 3rem;
@@ -235,7 +240,7 @@ footer {
   height: 100vh;
   box-shadow: -5px 0px 10px #0009;
   z-index: 10000;
-  transition: 0.7s;
+  transition: 0.7s ease-in-out;
 }
 .show-menu{
   right: 0;

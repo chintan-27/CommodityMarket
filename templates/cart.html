@@ -1,16 +1,27 @@
 {% extends 'index.html' %}
 {% block content %}
-{% for i in cart %}
 <div class="container new">
+{% if cart %}
+{% for i in cart %}
   {{i.name}}
   {{i.comcode}}
   {{i.type}}
   {{i.breed}}
   {{i.weight}}
-  <img src="/media/{{i.image}}" alt="" height="300" width="400">
-</div>
 {% endfor %}
+{% else %}
+<center>
+  <h2>No items in cart</h2><br><br>
+  <a href="/retailshop/" class="i-btn">Shop Now</a>
+
+  </center>
+{% endif %}
+</div>
+
 {% if cart %}
-<a href="/buycart/">BUY Now</a>
+<center>
+<br><br>
+<a href="/buycart/" class="i-btn">Buy Now</a>
+</center>
 {% endif %}
 {% endblock %}

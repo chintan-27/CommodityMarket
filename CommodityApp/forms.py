@@ -85,12 +85,12 @@ class UserTypeForm(forms.Form):
     usertype= forms.CharField(max_length=30,widget=forms.Select(choices=USER_CHOICES,attrs={'class':'d-form form-control'}))
 
 class CommodityForm(forms.Form):
-    name = forms.CharField(max_length=200)
-    amount = forms.FloatField()
-    description = forms.CharField(max_length=1000, widget=forms.Textarea())
-    breed=forms.CharField(max_length=200)
-    priceperkg = forms.FloatField()
-    priceperquintal = forms.FloatField()
+    name = forms.CharField(max_length=200,widget= forms.TextInput(attrs={'class':'d-form form-control'}))
+    amount = forms.FloatField( widget=forms.NumberInput(attrs={'id': 'form_homework', 'step': "0.01",'class':'form-control'}))
+    description = forms.CharField(max_length=1000, widget=forms.Textarea(attrs={'class':'d-form form-control'}))
+    breed=forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class':'d-form form-control'}))
+    priceperkg = forms.FloatField(widget= forms.TextInput(attrs={'class':'d-form form-control'}))
+    priceperquintal = forms.FloatField(widget=forms.NumberInput(attrs={'id': 'form_homework', 'step': "0.01",'class':'form-control'}))
     type_choices = (
         ('FRUIT','Fruit'),
         ('VEGIES','Vegetables'),
@@ -98,7 +98,7 @@ class CommodityForm(forms.Form):
         ('CEREAL','Cereal'),
         ('OTHERS','Others')
     )
-    type = forms.CharField(max_length=100,widget=forms.Select(choices=type_choices))
+    type = forms.CharField(max_length=100,widget=forms.Select(choices=type_choices,attrs={'class':'d-form form-control'}))
     perishable = forms.BooleanField()
     # date = forms.DateField(widget=DateInput)
     image = forms.ImageField(widget= forms.FileInput(attrs={'class':'form-control'}))
