@@ -32,9 +32,9 @@
     Status: {{i.status}}
   </div>
   <div class="col-md-2">
-    {% ifequal i.status "PENDING" %}
+    {% if i.status=="PENDING" %}
     <a href="/delivery/assigndelivery/{{i.ordercode}}/{{i.city2}}/">DELIVERED</a>
-    {% endifequal %}
+    {% endif %}
   </div>
 </div>
 {% endfor %}

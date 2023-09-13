@@ -45,9 +45,9 @@
     {{i.orderstatus}}
   </div>
   <div class="col-md-1">
-    {% ifequal i.orderstatus "DELIVERED" %}
+    {% if i.orderstatus == "DELIVERED" %}
     <a href="/feedback/{{i.comcode}}" class="btn btn-warning">FEEDBACK</a>
-    {% endifequal %}
+    {% endif %}
   </div>
 </div>
 {% endfor %}
@@ -100,9 +100,9 @@
     {{i.orderstatus}}
   </div>
   <div class="col-md-1">
-    {% ifequal i.orderstatus "DELIVERED" %}
+    {% if i.orderstatus == "DELIVERED" %}
     <a href="/feedback/{{i.comcode}}" class="btn btn-warning">FEEDBACK</a>
-    {% endifequal %}
+    {% endif %}
   </div>
 </div>
 {% endfor %}

@@ -50,24 +50,24 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     <li class="nav-item">
       <a class="nav-link active" href="#"><b>Language</b></a>
     </li>
-    {% ifequal type 'FR'  %}
+    {% if type == "FR"  %}
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'AddCommodities' %}"><b>Add Commodities</b></a>
     </li>
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'retailshop' %}"><b>Retail Shop</b></a>
     </li>
-    {% endifequal %}
-    {% ifequal type 'MR'  %}
+    {% endif %}
+    {% if type == "MR"  %}
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'wholesaleshop' %}"><b>Wholesale shop</b></a>
     </li>
-    {% endifequal %}
-    {% ifequal type 'RB'  %}
+    {% endif %}
+    {% if type == "RB"  %}
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'retailshop' %}"><b>Retail Shop</b></a>
     </li>
-    {% endifequal %}
+    {% endif %}
   </ul>
   </nav>
   {% block content %}
